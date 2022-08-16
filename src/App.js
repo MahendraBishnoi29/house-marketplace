@@ -1,4 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import ForgotPassword from "./components/Auth/ForgotPassword";
 import SignIn from "./components/Auth/SignIn";
@@ -22,6 +24,8 @@ function App() {
         </Routes>
         <Navbar />
       </Router>
+
+      <ToastContainer autoClose={3500} />
     </>
   );
 }
