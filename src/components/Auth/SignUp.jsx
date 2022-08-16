@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+// Firebase Stuff
 import {
   createUserWithEmailAndPassword,
   getAuth,
   updateProfile,
 } from "firebase/auth";
-import { ReactComponent as ArrowRightIcon } from "../../assets/svg/keyboardArrowRightIcon.svg";
-import EyeIcon from "../../assets/svg/eyeIcon.svg";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { db } from "../../firebase.config";
+// Components
+import { ReactComponent as ArrowRightIcon } from "../../assets/svg/keyboardArrowRightIcon.svg";
+import EyeIcon from "../../assets/svg/eyeIcon.svg";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -47,12 +49,11 @@ const SignUp = () => {
         displayName: name,
       });
 
-      // const formDataCopy = { ...formData };
-      // delete formData.password;
-      // formDataCopy.timestamp = serverTimestamp();
+      const formDataCopy = { ...formData };
+      delete formDataCopy.password;
+      formDataCopy.timestamp = serverTimestamp();
 
-      // await setDoc(doc(db, "users", user.uid), formDataCopy);
-
+      await setDoc(doc(db, "users", user.uid), formDataCopy);
       navigate("/");
     } catch (error) {
       console.log(error.message);
