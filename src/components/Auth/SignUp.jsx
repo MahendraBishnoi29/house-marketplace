@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import { useNavigate, Link } from "react-router-dom";
 // Firebase Stuff
 import {
@@ -54,9 +55,10 @@ const SignUp = () => {
       formDataCopy.timestamp = serverTimestamp();
 
       await setDoc(doc(db, "users", user.uid), formDataCopy);
+      toast.success("Sign Up Successful 🎉");
       navigate("/");
     } catch (error) {
-      console.log(error.message);
+      toast.error(error.message);
     }
   };
 
