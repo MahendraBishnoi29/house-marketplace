@@ -60,7 +60,7 @@ const SignUp = () => {
               src={EyeIcon}
               alt="eyeSvg"
               className="showPassword"
-              onClick={(prevState) => !prevState}
+              onClick={() => setShowPassword((prevState) => !prevState)}
             />
           </div>
 
