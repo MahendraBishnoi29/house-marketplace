@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  updateProfile,
+} from "firebase/auth";
 import { ReactComponent as ArrowRightIcon } from "../../assets/svg/keyboardArrowRightIcon.svg";
 import EyeIcon from "../../assets/svg/eyeIcon.svg";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { db } from "../../firebase.config";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,6 +29,36 @@ const SignUp = () => {
     }));
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const auth = getAuth();
+
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      const user = userCredential.user;
+
+      updateProfile(auth.currentUser, {
+        displayName: name,
+      });
+
+      // const formDataCopy = { ...formData };
+      // delete formData.password;
+      // formDataCopy.timestamp = serverTimestamp();
+
+      // await setDoc(doc(db, "users", user.uid), formDataCopy);
+
+      navigate("/");
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <>
       <div className="pageContainer">
@@ -29,7 +66,7 @@ const SignUp = () => {
           <p className="pageHeader">Welcome Back</p>
         </header>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <input
             type="text"
             className="nameInput"
