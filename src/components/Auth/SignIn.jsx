@@ -49,23 +49,24 @@ const SignIn = () => {
     <>
       <div className="pageContainer">
         <header>
-          <p className="pageHeader">Welcome Back</p>
+          <p className="pageHeader">Welcome Back!</p>
         </header>
 
         <form onSubmit={handleSignIn}>
           <input
             type="email"
             className="emailInput"
-            placeholder="enter your email"
+            placeholder="Email"
             id="email"
             value={email}
             onChange={onChange}
           />
+
           <div className="passwordInputDiv">
             <input
               type={showPassword ? "text" : "password"}
               className="passwordInput"
-              placeholder="password"
+              placeholder="Password"
               id="password"
               value={password}
               onChange={onChange}
@@ -73,14 +74,14 @@ const SignIn = () => {
 
             <img
               src={EyeIcon}
-              alt="eyeSvg"
+              alt="show password"
               className="showPassword"
               onClick={() => setShowPassword((prevState) => !prevState)}
             />
           </div>
 
           <Link to="/forgot-password" className="forgotPasswordLink">
-            Forgot Password?
+            Forgot Password
           </Link>
 
           <div className="signInBar">
@@ -91,7 +92,6 @@ const SignIn = () => {
           </div>
         </form>
 
-        {/* Google Auth Firebase */}
         <OAuth />
 
         <Link to="/sign-up" className="registerLink">
