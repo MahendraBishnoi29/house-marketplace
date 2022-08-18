@@ -9,6 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import ListingItem from "../../components/ListingItem/ListingItem";
 import Spinner from "../../components/Spinner/Spinner";
 import { db } from "../../firebase.config";
 
@@ -45,27 +46,11 @@ const Category = () => {
         });
 
         setListings(listings);
-        console.log(listings);
         setLoading(false);
       } catch (error) {
         toast.error("Could not fetch listings");
       }
     };
-
-    // SHORT METHOD 🚀
-    // const fetchListings = async () => {
-    //   const querySnapshot = await getDocs(collection(db, "listings"));
-    //   const document = [];
-
-    //   querySnapshot.forEach((doc) => {
-    //     document.push({
-    //       data: { ...doc.data() },
-    //       id: doc.id,
-    //     });
-    //   });
-    //   setListings(document);
-    //   setLoading(false);
-    // };
 
     fetchListings();
   }, [params.categoryName]);
@@ -86,7 +71,11 @@ const Category = () => {
           <main>
             <ul className="categoryListings">
               {listings.map((listing) => (
-                <h2 key={listing.id}>{listing.data?.name}</h2>
+                <ListingItem
+                  listing={listing.data}
+                  id={listing.id}
+                  key={listing.id}
+                />
               ))}
             </ul>
           </main>
