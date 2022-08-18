@@ -23,13 +23,13 @@ const Explore = () => {
             <p className="exploreCategoryName">Places for Rent</p>
           </Link>
 
-          <Link to="/category/sell">
+          <Link to="/category/sale">
             <img
               src={sellImage}
               alt="houseImage"
               className="exploreCategoryImg"
             />
-            <p className="exploreCategoryName">Places for Sell</p>
+            <p className="exploreCategoryName">Places for Sale</p>
           </Link>
         </div>
       </main>
