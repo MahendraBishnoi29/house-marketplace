@@ -2,6 +2,7 @@
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import Spinner from "../../components/Spinner/Spinner";
 
 const CreateListing = () => {
@@ -37,7 +38,7 @@ const CreateListing = () => {
     longitude,
   } = formData;
 
-  const [geolocationEnabled, setGeolocationEnabled] = useState(true);
+  const [geolocationEnabled, setGeolocationEnabled] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const auth = getAuth();
@@ -64,10 +65,49 @@ const CreateListing = () => {
     return <Spinner />;
   }
 
-  const handleSubmit = (e) => {
+  // Handle Submit
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (discountedPrice >= regularPrice) {
+      setLoading(false);
+      return toast.error("Discounted Price should be less then Regular Price!");
+    }
+
+    if (images.length > 6) {
+      setLoading(false);
+      return toast.error("Max 6 Images!");
+    }
+
+    let geoLocation = {};
+    let location;
+
+    if (geolocationEnabled) {
+      const res = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyDKoUHXjisvx3GHfj4HY3rLgvbTSUD0_6Y`
+      );
+      const data = await res.json();
+
+      geoLocation.lat = data.results[0]?.geometry.location.lat ?? 0;
+      geoLocation.lng = data.results[0]?.geometry.location.lng ?? 0;
+
+      location =
+        data.status === "ZERO_RESULTS"
+          ? undefined
+          : data.results[0].formated_address;
+
+      if (location === undefined || location.includes("undefined")) {
+        setLoading(false);
+        toast.error("Please Enter a Valid Adress!");
+      }
+    } else {
+      geoLocation.lat = latitude;
+      geoLocation.lng = longitude;
+      location = address;
+    }
+    setLoading(false);
   };
 
+  // Handle Mutate
   const onMutate = (e) => {
     let boolean = null;
     if (e.target.value === "true") {
