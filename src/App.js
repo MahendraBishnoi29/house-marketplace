@@ -8,6 +8,7 @@ import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import Category from "./pages/category/Category";
 import CreateListing from "./pages/createListing/CreateListing";
 import Explore from "./pages/explore/Explore";
+import Listing from "./pages/listing/Listing";
 import Offer from "./pages/offers/Offer";
 import Profile from "./pages/profile/Profile";
 
@@ -26,6 +27,10 @@ function App() {
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/create-listing" element={<CreateListing />} />
+          <Route
+            path="/category/:categoryName/:listingId"
+            element={<Listing />}
+          />
         </Routes>
         <Navbar />
       </Router>
