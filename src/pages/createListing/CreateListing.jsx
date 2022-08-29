@@ -164,6 +164,7 @@ const CreateListing = () => {
     const imgUrls = await Promise.all(
       [...images].map((image) => storeImage(image))
     ).catch((err) => {
+      console.log(err.message);
       setLoading(false);
       toast.error("Failed to Upload Images!");
     });
@@ -175,10 +176,11 @@ const CreateListing = () => {
       timestamp: serverTimestamp(),
     };
 
+    formDataCopy.location = address;
+
     delete formDataCopy.images;
     delete formDataCopy.address;
 
-    location && (formDataCopy.location = location);
     !formDataCopy.offer && delete formDataCopy.discountedPrice;
 
     const docRef = await addDoc(collection(db, "listings"), formDataCopy);
