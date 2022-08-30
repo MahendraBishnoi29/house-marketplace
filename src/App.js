@@ -6,6 +6,7 @@ import SignUp from "./components/Auth/SignUp";
 import Navbar from "./components/Navbar/Navbar";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import Category from "./pages/category/Category";
+import Contact from "./pages/contact/Contact";
 import CreateListing from "./pages/createListing/CreateListing";
 import Explore from "./pages/explore/Explore";
 import Listing from "./pages/listing/Listing";
@@ -31,6 +32,7 @@ function App() {
             path="/category/:categoryName/:listingId"
             element={<Listing />}
           />
+          <Route path="/contact/:landlordId" element={<Contact />} />
         </Routes>
         <Navbar />
       </Router>
