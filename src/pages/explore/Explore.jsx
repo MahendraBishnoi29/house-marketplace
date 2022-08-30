@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 // Images
 import rentImage from "../../assets/jpg/rentCategoryImage.jpg";
 import sellImage from "../../assets/jpg/sellCategoryImage.jpg";
+import Slider from "../../components/Slider/Slider";
 
 const Explore = () => {
   return (
@@ -12,6 +13,7 @@ const Explore = () => {
       </header>
 
       <main>
+        <Slider />
         <p className="exploreCategoryHeading">Categories</p>
         <div className="exploreCategories">
           <Link to="/category/rent">
