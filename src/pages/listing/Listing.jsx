@@ -5,6 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase.config";
+import { MapContainer, TileLayer } from "react-leaflet";
 
 const Listing = () => {
   const [listing, setListing] = useState(null);
@@ -66,7 +67,7 @@ const Listing = () => {
         </p>
         {listing.offer && (
           <p className="discountPrice">
-            ${listing.regularPrice - listing.discountedPrice}discount
+            ${listing.regularPrice - listing.discountedPrice}&nbsp;discount
           </p>
         )}
 
@@ -85,7 +86,25 @@ const Listing = () => {
           <li> {listing.furnished && "Furnished"}</li>
         </ul>
 
-        <p className="listingLocationTitle">{Location}</p>
+        <p className="listingLocationTitle">Location</p>
+        <p>
+          Might Not Work Becuse i don't have credit card for Google Geolocation
+          API :( But You Can Google the location
+        </p>
+
+        <div className="leafletContainer">
+          <MapContainer
+            style={{ height: "100%", width: "100%" }}
+            // center={[listing?.geolocation?.lat, listing?.geolocation?.lng]}
+            zoom={13}
+            scrollWheelZoom={false}
+          >
+            <TileLayer
+              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png"
+            />
+          </MapContainer>
+        </div>
         {auth.currentUser?.uid !== listing.userRef && (
           <Link
             to={`/contact/${listing.userRef}?listingName=${listing.name}`}
