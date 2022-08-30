@@ -5,6 +5,11 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase.config";
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
 import { MapContainer, TileLayer } from "react-leaflet";
 
 const Listing = () => {
@@ -23,7 +28,6 @@ const Listing = () => {
 
       if (docSnap.exists()) {
         setListing(docSnap.data());
-        console.log(docSnap.data());
         setLoading(false);
       }
     };
@@ -44,12 +48,48 @@ const Listing = () => {
 
   return (
     <main>
+      {/* <Swiper slidesPerView={1} pagination={{ clickable: true }}>
+        {listing.imgUrls.map((url, index) => (
+          <SwiperSlide key={index}>
+            <div
+              style={{
+                background: `url(${listing.imgUrls[index]}) center no-repeat`,
+                backgroundSize: "cover",
+              }}
+              className="swiperSlideDiv"
+            ></div>
+          </SwiperSlide>
+        ))}
+      </Swiper> */}
+      {/* <Swiper slidesPerView={1} pagination={{ clickable: true }}>
+        {listing.imgUrls.map((url, index) => (
+          <SwiperSlide key={index}>
+            <div
+              // style={{
+              //   background: `${url} center no-repeat`,
+              //   backgroundSize: "cover",
+              // }}
+              className="swiperSlideDiv"
+            >
+              <img
+                src={url}
+                alt=""
+                style={{
+                  objectFit: "cover",
+                  width: "100vw",
+                  height: "70vh",
+                  position: "center",
+                }}
+              />
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper> */}
+
       <div onClick={copyToClipboard} className="shareIconDiv">
         <img src={ShareIcon} alt="shareSvg" className="" />
       </div>
-
       {shareLinkCopied && <p className="linkCopied">Link Copied!</p>}
-
       <div className="listingDetails">
         <p className="listingName">
           {listing.name} - $
