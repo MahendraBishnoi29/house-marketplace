@@ -2,15 +2,16 @@ import React, { useEffect, useState } from "react";
 import Spinner from "../../components/Spinner/Spinner";
 import ShareIcon from "../../assets/svg/shareIcon.svg";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { MapContainer, TileLayer } from "react-leaflet";
 import { getAuth } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase.config";
-// Import Swiper React components
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
 import "swiper/css";
-import { MapContainer, TileLayer } from "react-leaflet";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 
 const Listing = () => {
   const [listing, setListing] = useState(null);
@@ -48,43 +49,23 @@ const Listing = () => {
 
   return (
     <main>
-      {/* <Swiper slidesPerView={1} pagination={{ clickable: true }}>
+      <Swiper
+        modules={[Navigation, Pagination, Scrollbar, A11y]}
+        slidesPerView={1}
+        navigation
+        pagination={{ clickable: true }}
+        scrollbar={{ draggable: true }}
+      >
         {listing.imgUrls.map((url, index) => (
           <SwiperSlide key={index}>
-            <div
-              style={{
-                background: `url(${listing.imgUrls[index]}) center no-repeat`,
-                backgroundSize: "cover",
-              }}
-              className="swiperSlideDiv"
-            ></div>
+            <img
+              className="swiperSlideImg"
+              src={listing?.imgUrls[index]}
+              alt=""
+            />
           </SwiperSlide>
         ))}
-      </Swiper> */}
-      {/* <Swiper slidesPerView={1} pagination={{ clickable: true }}>
-        {listing.imgUrls.map((url, index) => (
-          <SwiperSlide key={index}>
-            <div
-              // style={{
-              //   background: `${url} center no-repeat`,
-              //   backgroundSize: "cover",
-              // }}
-              className="swiperSlideDiv"
-            >
-              <img
-                src={url}
-                alt=""
-                style={{
-                  objectFit: "cover",
-                  width: "100vw",
-                  height: "70vh",
-                  position: "center",
-                }}
-              />
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper> */}
+      </Swiper>
 
       <div onClick={copyToClipboard} className="shareIconDiv">
         <img src={ShareIcon} alt="shareSvg" className="" />
