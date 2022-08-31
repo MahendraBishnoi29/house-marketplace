@@ -337,6 +337,13 @@ button {
   object-fit: cover;
 }
 
+.recomendedSlideImg {
+  width: 100%;
+  height: 55vh;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
 .swiperSlideText {
   color: #ffffff;
   position: absolute;
