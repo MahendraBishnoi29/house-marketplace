@@ -1,6 +1,16 @@
 import { getAuth, updateProfile } from "firebase/auth";
-import { doc, updateDoc } from "firebase/firestore";
-import React, { useState } from "react";
+import ListingItem from "../../components/ListingItem/ListingItem";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  orderBy,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { db } from "../../firebase.config";
@@ -16,8 +26,36 @@ const Profile = () => {
     email: auth.currentUser?.email,
   });
   const [changeDetails, setChangeDetails] = useState(false);
+  const [listings, setListings] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const { name, email } = formData;
+
+  useEffect(() => {
+    const fetchUserListings = async () => {
+      const listingRef = collection(db, "listings");
+
+      const q = query(
+        listingRef,
+        where("userRef", "==", auth.currentUser.uid),
+        orderBy("timestamp", "desc")
+      );
+      const querySnap = await getDocs(q);
+
+      let listings = [];
+
+      querySnap.forEach((doc) => {
+        return listings.push({
+          id: doc.id,
+          data: doc.data(),
+        });
+      });
+
+      setListings(listings);
+      setLoading(false);
+    };
+    fetchUserListings();
+  }, [auth.currentUser.uid]);
 
   const handleLogOut = async (e) => {
     auth.signOut();
@@ -41,6 +79,15 @@ const Profile = () => {
     } catch (error) {
       toast.error(error.message);
     }
+  };
+
+  const handleDelete = async (listingId) => {
+    await deleteDoc(doc(db, "listings", listingId));
+    const updateListings = listings.filter(
+      (listing) => listing.id !== listingId
+    );
+    toast.success("Listing Deleted");
+    setListings(updateListings);
   };
 
   const handleChange = (e) => {
@@ -99,6 +146,21 @@ const Profile = () => {
           <p className="">Sell or Rent Your Home</p>
           <img src={ArrowRight} alt="arrowSvg" />
         </Link>
+        {!loading && listings?.length > 0 && (
+          <>
+            <p className="listingText">Your Listings</p>
+            <ul className="listingList">
+              {listings?.map((listing) => (
+                <ListingItem
+                  key={listing.id}
+                  listing={listing.data}
+                  id={listing.id}
+                  onDelete={() => handleDelete(listing.id)}
+                />
+              ))}
+            </ul>
+          </>
+        )}
       </main>
     </div>
   );
