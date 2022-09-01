@@ -255,6 +255,10 @@ const EditListing = () => {
     }
   };
 
+  if (loading) {
+    return <Spinner />;
+  }
+
   return (
     <div className="profile">
       <header>
