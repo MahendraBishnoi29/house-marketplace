@@ -8,6 +8,7 @@ import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import Category from "./pages/category/Category";
 import Contact from "./pages/contact/Contact";
 import CreateListing from "./pages/createListing/CreateListing";
+import EditListing from "./pages/createListing/editListing/EditListing";
 import Explore from "./pages/explore/Explore";
 import Listing from "./pages/listing/Listing";
 import Offer from "./pages/offers/Offer";
@@ -28,6 +29,7 @@ function App() {
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/create-listing" element={<CreateListing />} />
+          <Route path="/edit-listing/:listingId" element={<EditListing />} />
           <Route
             path="/category/:categoryName/:listingId"
             element={<Listing />}
