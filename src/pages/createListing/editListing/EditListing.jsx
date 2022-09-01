@@ -114,6 +114,7 @@ const EditListing = () => {
   // Handle Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     if (discountedPrice >= regularPrice) {
       setLoading(false);
       return toast.error("Discounted Price should be less then Regular Price!");
