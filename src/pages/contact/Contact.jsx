@@ -32,7 +32,7 @@ const Contact = () => {
   return (
     <div className="pageContainer">
       <header>
-        <p className="pageHeader">Contact Header</p>
+        <p className="pageHeader">Contact</p>
       </header>
       {landlord !== null && (
         <main>
