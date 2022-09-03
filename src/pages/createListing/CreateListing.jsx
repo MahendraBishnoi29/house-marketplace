@@ -184,16 +184,10 @@ const CreateListing = () => {
 
     !formDataCopy.offer && delete formDataCopy.discountedPrice;
 
-    const docRef = await toast.promise(
-      addDoc(collection(db, "listings"), formDataCopy),
-      {
-        pending: "Creating New Listing...",
-        error: "Error Creating Listing!",
-        success: "New Listing Created Successfully",
-      }
-    );
+    const docRef = await addDoc(collection(db, "listings"), formDataCopy);
 
     setLoading(false);
+    toast.success("New Listing Created Successfully");
     navigate(`/category/${formDataCopy.type}/${docRef.id}`);
   };
 
